@@ -30813,33 +30813,33 @@ module.exports = parseParams
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-const core = __nccwpck_require__(2186);
-const github = __nccwpck_require__(5438);
+const core = __nccwpck_require__(2186)
+const github = __nccwpck_require__(5438)
 
 try {
-  const octokit = github.getOctokit(core.getInput("github_token"));
-  const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-  octokit.actions
+  const octokit = github.getOctokit(core.getInput('github_token'))
+  const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/')
+
+  octokit
+
+  octokit.rest.actions
     .listWorkflowRuns({
       owner,
       repo,
-      workflow_id: core.getInput("workflow_id"),
-      status: "success",
-      branch: core.getInput("branch"),
-      event: "push",
+      workflow_id: core.getInput('workflow_id'),
+      status: 'success',
+      branch: core.getInput('branch'),
+      event: 'push',
     })
     .then((res) => {
-      const lastSuccessCommitHash =
-        res.data.workflow_runs.length > 0
-          ? res.data.workflow_runs[0].head_commit.id
-          : "";
-      core.setOutput("commit_hash", lastSuccessCommitHash);
+      const lastSuccessCommitHash = res.data.workflow_runs.length > 0 ? res.data.workflow_runs[0].head_commit.id : ''
+      core.setOutput('commit_hash', lastSuccessCommitHash)
     })
     .catch((e) => {
-      core.setFailed(e.message);
-    });
+      core.setFailed(e.message)
+    })
 } catch (e) {
-  core.setFailed(e.message);
+  core.setFailed(e.message)
 }
 
 })();
